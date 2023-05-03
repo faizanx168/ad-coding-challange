@@ -2,11 +2,10 @@ const { Pool } = require("pg");
 
 // PostgreSQL database configuration from the googel doc
 const pool = new Pool({
-  user: "interviewed",
-  host: "35.199.46.87",
-  database: "be-interview-env",
-  password: "SziW8A",
-  port: 5432,
+  user: process.env.user,
+  host: process.env.host,
+  database: process.env.database,
+  password: process.env.password,
 });
 
 // Function to insert a sigle token into the database and display the result

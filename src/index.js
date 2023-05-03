@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const express = require("express");
 const axios = require("axios");
 const app = express();
@@ -10,14 +13,15 @@ const querySize = 3000;
 
 // HTTP endpoint to receive the POST request
 app.post("/", async (req, res) => {
-  const url = `https://us-east4-interview-questions-adheretech.cloudfunctions.net/be-interview-env-datasource-5110cb24?size=${querySize}`;
-
+  const url = process.env.URL + querySize;
+  console.log(url);
   try {
     // making the post req to the server
     const response = await axios.post(url);
     const tokens = await response.data.trim().split("\n");
     // converting the array into a set to remove duplications
     const uniqueTokens = [...new Set(tokens)];
+    console.log(uniqueTokens);
     let count = 1;
     for (const token of uniqueTokens) {
       // inserting one token at a time into db
